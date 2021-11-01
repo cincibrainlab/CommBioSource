@@ -34,10 +34,11 @@
 # =============================================================================#
 
   # required packages for repmake
-  install.packages(c('argparser','this.path','here'))
+  if (!require("pacman")) install.packages("pacman")
+  pacman::p_load(argparser, this.path, here)
   
   # highly recommended packages
-  install.packages(c('argparser','this.path','here'))
+  pacman::p_load(tidyverse, officer)
   
 # =============================================================================#
 # Step 3: Command line parser (Do not edit)                                    #
@@ -159,6 +160,24 @@ saveTableWithCaption <- function(caption_file_docx, table_file_docx, original_ta
     body_add_docx(table_file_docx) %>%
     print(target = original_target_file)
 }
+
+# == AESTHETICS ====================================================
+colors_group <- c("red", "black")
+
+colors_mgroup <- c(
+  "FXS(F)" = "darkorange2",
+  "FXS(M)" = "red",
+  "Mosaic(M))" = "pink",
+  "Control(F)" = "darkviolet",
+  "Control(M)" = "blue"
+)
+
+colors_subgroup <- c(
+  "FXS(F)" = "darkorange2",
+  "FXS(M)" = "red",
+  "Control(F)" = "darkviolet",
+  "Control(M)" = "blue"
+)
 
 #==============================================================================#
 # RepMake          Reproducible Manuscript Toolkit with GNU Make               #

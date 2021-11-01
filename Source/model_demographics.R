@@ -21,6 +21,9 @@
 # Step 1: Load common packages, data, and functions.                           #
 # =============================================================================#
 source(file = "Source/_Common.R")
+
+pacman::p_load(labelled)
+
 #==============================================================================#
 # Step 2: Customize basename for script                                        #
 #==============================================================================#
@@ -64,7 +67,7 @@ selectvars <- c("iq_dev",
 
 # exclude subjects with benzodiazapines 794, 1806, 2464
 model.demo  <- 
-  read_csv(source_filename.clinical) %>%
+  read_csv("Source/datasets/fxssource_table_01_demographics_data.csv") %>%
   dplyr::filter(eegid %notin% c("D0794_rest","D1806_rest","D2464_rest")) %>%
   dplyr::select(all_of(c(demographics, selectvars))) %>%
   mutate( NVIQ = (sbs_nvz * 15) + 100,
@@ -137,3 +140,4 @@ model.output <- model.demo
 # =============================================================================#
 
 save(model.output, dat.demo_short, dat.demo_long, dat.demo_iq, file = target_file)
+file.info(target_file)[1]

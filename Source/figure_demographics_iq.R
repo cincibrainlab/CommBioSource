@@ -22,6 +22,8 @@
 # =============================================================================#
 rm(list = ls()) # clear current environment
 source(file = "Source/_Common.R")
+
+pacman::p_load(lsmeans)
 #==============================================================================#
 # Step 2: Customize basename for script                                        #
 #==============================================================================#
@@ -107,7 +109,7 @@ p.demo_iq <- dat.demo_iq %>% ggplot(aes(x = subgroup, y = sbs_nvz, fill = subgro
 # Step 1B: Optional add multiple plots to save file to create panels                                                          #
 #==============================================================================#
 
-resave(p.demo_iq, file=panel_data_file)
+# resave(p.demo_iq, file=panel_data_file)
 
 # =============================================================================#
 
@@ -178,6 +180,8 @@ pngdim <- png_dimensions(figure_png_filename) * scaling_factor
 saveFigureWithCaption( caption_file_docx, 
                        figure_png_filename, 
                        doc_filename,  height = pngdim[1], width = pngdim[2])
+
+print(target_file)
 #==============================================================================#
 # RepMake          Reproducible Manuscript Toolkit with GNU Make               #
 #                  Version 8/2021                                              #

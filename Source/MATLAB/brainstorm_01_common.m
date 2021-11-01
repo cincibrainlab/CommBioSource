@@ -25,7 +25,7 @@ gui_brainstorm('SetCurrentProtocol', iProtocol);
 global            GlobalData;
 sStudy          = bst_get('Study');
 sProtocol       = bst_get('ProtocolInfo');
-sSubjects       =  bst_get('ProtocolSubjects');
+sSubjects       = bst_get('ProtocolSubjects');
 sStudyList      = bst_get('ProtocolStudies'); 
 protocol_name   = sProtocol.Comment;
 atlas           = fx_BstGetDKAtlasFromSurfaceMat;
