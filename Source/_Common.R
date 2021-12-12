@@ -40,6 +40,33 @@
   # highly recommended packages
   pacman::p_load(tidyverse, officer)
   
+  # Brain visualization packages
+  pacman::p_load(ggseg3d,ggseg, ggsegExtra, ggsegDefaultExtra)
+
+  # #: install ggBrain
+  # ## if needed
+  # install.packages("devtools")
+  # 
+  # ## main package
+  # library(devtools)
+  # install_github('aaronjfisher/ggBrain',build_vignettes=TRUE)
+  # 
+  # ## to access help pages
+  # library(ggBrain)
+  # help(package=ggBrain)
+  
+  remotes::install_github("LCBC-UiO/ggsegDefaultExtra")
+  
+  # install.packages("remotes")
+  # remotes::install_github("ggseg/ggseg3d", build_vignettes = TRUE)
+  # # install.packages("remotes")
+  # remotes::install_github("ggseg/ggsegExtra")
+  # library(ggseg3d)
+  # vignette("ggseg3d")
+  # p <- ggseg3d(atlas=dk_3d) %>%
+  #   remove_axes() %>%
+  #   pan_camera("left lateral")
+  
 # =============================================================================#
 # Step 3: Command line parser (Do not edit)                                    #
 # =============================================================================#
@@ -89,6 +116,24 @@ validateTotalNumberOfSubjects <- function(test_n, valid_n) {
     msg = "Total Number of Subjects Incorrect"
   )
 }
+
+add_sig_stars <- function (p, cutoffs = c(0.05, 0.01, 0.001)) {
+  stopifnot(length(cutoffs) == 3)
+  if (inherits(p, c("matrix", "data.frame")) && length(dim(p)) == 
+      2) {
+    apply(p, c(1, 2), add_sig_stars, cutoffs = cutoffs)
+  }
+  else {
+    if (length(p) > 1) {
+      sapply(p, add_sig_stars, cutoffs = cutoffs)
+    }
+    else {
+      ifelse(p > cutoffs[1], "", ifelse(p > cutoffs[2], 
+                                        "*", ifelse(p > cutoffs[3], "**", "***")))
+    }
+  }
+}
+
 
 ### CAPTION FUNCTIONS ####
 
@@ -162,7 +207,7 @@ saveTableWithCaption <- function(caption_file_docx, table_file_docx, original_ta
 }
 
 # == AESTHETICS ====================================================
-colors_group <- c("red", "black")
+colors_group <- c("red", "darkgrey")
 
 colors_mgroup <- c(
   "FXS(F)" = "darkorange2",
@@ -177,6 +222,12 @@ colors_subgroup <- c(
   "FXS(M)" = "red",
   "Control(F)" = "darkviolet",
   "Control(M)" = "blue"
+)
+colors_subgroup2 <- c(
+  "FXS_F" = "darkorange2",
+  "FXS_M" = "red",
+  "TDC_F" = "darkviolet",
+  "TDC_M" = "blue"
 )
 
 #==============================================================================#
